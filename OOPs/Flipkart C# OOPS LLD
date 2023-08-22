@@ -1,0 +1,61 @@
+// Online C# Editor for free
+// Write, Edit and Run your C# code using C# Online Compiler
+
+using System;
+
+public class User
+{
+    public string Name {get; set;}
+    public string Email {get; set;}
+    public Cart ShoppingCart {get; set;}
+    
+    public User(string name, string email){
+        Name = name;
+        Email = email;
+        ShoppingCart = new Cart();
+    }
+}
+public class Product
+{
+    public string ProductId {get; set;}
+    public decimal Quantity {get; set;}
+    public int Price {get; set;}
+    
+    public Product(string id, decimal quantity, int price){
+        ProductId = id;
+        Quantity = quantity;
+        Price = price;
+    }
+}
+Class Cart
+{
+    List<Product> Items {get; private set;}
+    public Cart(){
+        Items = new List<Product>();
+    }
+    public void AddToCart(Product product){
+        Items.Add(Product);
+    }
+    public void RemoveFromCart(Product product){
+        Items.remove(product);
+    }
+    public decimal CalculateTotal(){
+        return Items.Sum(item => item.Price);
+    }
+}
+public class HelloWorld
+{
+    public static void Main(string[] args)
+    {
+        User user1 = new User("","");
+        User user2 = new User("","");
+        Product product1 = new Product ("", "", "10");
+        Product product2 = new Product ("", "", "11");
+        
+        user1.shoppingCart.AddToCart(product1);
+        user2.shoppingCart.AddToCart(product2);
+        
+        Console.WriteLine($"{user1.Name} has Cart Total = {user1.shoppingCart.CalculateTotal()}");
+
+    }
+}
