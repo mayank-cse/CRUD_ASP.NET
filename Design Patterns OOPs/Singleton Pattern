@@ -1,6 +1,6 @@
 class Singleton{
   Static Singleton single = new Singleton();
-  private void Singleton{
+  private void Singleton(){
   }
   public static Singleton getInstance(){
     return single
