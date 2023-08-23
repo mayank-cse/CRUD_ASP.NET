@@ -1,0 +1,89 @@
+using System;
+using System.Collections.Generic;
+
+// Subject (Observable)
+interface IChannel
+{
+    void Subscribe(ISubscriber subscriber);
+    void Unsubscribe(ISubscriber subscriber);
+    void NotifySubscribers(string videoTitle);
+}
+
+// Observer
+interface ISubscriber
+{
+    void Update(string videoTitle);
+}
+
+// Concrete Subject
+class YouTubeChannel : IChannel
+{
+    private List<ISubscriber> subscribers = new List<ISubscriber>();
+    private string latestVideo;
+
+    public void Subscribe(ISubscriber subscriber)
+    {
+        subscribers.Add(subscriber);
+    }
+
+    public void Unsubscribe(ISubscriber subscriber)
+    {
+        subscribers.Remove(subscriber);
+    }
+
+    public void NotifySubscribers(string videoTitle)
+    {
+        foreach (var subscriber in subscribers)
+        {
+            subscriber.Update(videoTitle);
+        }
+    }
+
+    public void UploadVideo(string videoTitle)
+    {
+        latestVideo = videoTitle;
+        NotifySubscribers(videoTitle);
+    }
+}
+
+// Concrete Observer
+class YouTubeSubscriber : ISubscriber
+{
+    private string name;
+
+    public YouTubeSubscriber(string name)
+    {
+        this.name = name;
+    }
+
+    public void Update(string videoTitle)
+    {
+        Console.WriteLine($"{name} received notification: New video uploaded - {videoTitle}");
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        YouTubeChannel channel = new YouTubeChannel();
+
+        YouTubeSubscriber subscriber1 = new YouTubeSubscriber("Subscriber 1");
+        YouTubeSubscriber subscriber2 = new YouTubeSubscriber("Subscriber 2");
+
+        channel.Subscribe(subscriber1);
+        channel.Subscribe(subscriber2);
+
+        channel.UploadVideo("Introduction to Observer Pattern");
+
+        channel.Unsubscribe(subscriber2);
+
+        channel.UploadVideo("Advanced Observables and Observers");
+    }
+}
+*********************
+IChannel defines the interface for the YouTube channel (subject) that maintains a list of subscribers and notifies them of new video uploads.
+ISubscriber defines the interface for the subscriber (observer) that gets notified when a new video is uploaded.
+YouTubeChannel is the concrete subject that implements the IChannel interface. It maintains a list of subscribers and notifies them when a new video is uploaded.
+YouTubeSubscriber is the concrete observer that implements the ISubscriber interface. It updates when it receives notifications of new video uploads.
+In the Program class, we demonstrate how to create a YouTube channel, subscribers, subscribe and unsubscribe subscribers, and upload videos using the Observer Pattern.
