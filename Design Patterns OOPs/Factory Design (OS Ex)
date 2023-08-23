@@ -1,0 +1,70 @@
+The Factory Design Pattern is a creational design pattern that provides an interface for creating objects in a superclass but allows subclasses to alter the type of objects that will be created. Here's an example of how you might use the Factory Design Pattern in C# for creating different types of Operating System objects:
+https://www.youtube.com/watch?v=pt1IbV1aSZ4&ab_channel=Telusko
+
+using System;
+
+// Abstract Product
+interface OperatingSystem
+{
+    void Info();
+}
+
+// Concrete Products
+class Windows : OperatingSystem
+{
+    public void Info()
+    {
+        Console.WriteLine("This is Windows operating system.");
+    }
+}
+
+class Linux : OperatingSystem
+{
+    public void Info()
+    {
+        Console.WriteLine("This is Linux operating system.");
+    }
+}
+
+class MacOS : OperatingSystem
+{
+    public void Info()
+    {
+        Console.WriteLine("This is macOS operating system.");
+    }
+}
+
+// Creator (Factory) Class
+class OperatingSystemFactory
+{
+    public OperatingSystem CreateOperatingSystem(string type)
+    {
+        switch (type.ToLower())
+        {
+            case "windows":
+                return new Windows();
+            case "linux":
+                return new Linux();
+            case "macos":
+                return new MacOS();
+            default:
+                throw new ArgumentException("Invalid operating system type.");
+        }
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        OperatingSystemFactory osFactory = new OperatingSystemFactory();
+
+        OperatingSystem windowsOS = osFactory.CreateOperatingSystem("Windows");
+        OperatingSystem linuxOS = osFactory.CreateOperatingSystem("Linux");
+        OperatingSystem macosOS = osFactory.CreateOperatingSystem("MacOS");
+
+        windowsOS.Info();
+        linuxOS.Info();
+        macosOS.Info();
+    }
+}
