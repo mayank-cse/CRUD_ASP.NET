@@ -1,0 +1,65 @@
+https://www.youtube.com/watch?v=Y7DYhe6efQY&ab_channel=Telusko
+
+using System;
+
+interface IPen
+{
+    void Write(string content);
+}
+
+class RegularPen : IPen
+{
+    public void Write(string content)
+    {
+        Console.WriteLine($"Regular Pen: {content}");
+    }
+}
+
+class PilotPen
+{
+    public void Mark(string content)
+    {
+        Console.WriteLine($"Pilot Pen: {content}");
+    }
+}
+
+class PilotPenAdapter : IPen
+{
+    private PilotPen _pilotPen;
+
+    public PilotPenAdapter(PilotPen pilotPen)
+    {
+        _pilotPen = pilotPen;
+    }
+
+    public void Write(string content)
+    {
+        _pilotPen.Mark(content);
+    }
+}
+
+class Student
+{
+    public void DoAssignment(IPen pen, string content)
+    {
+        pen.Write(content);
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Student student = new Student();
+
+        PilotPen pilotPen = new PilotPen();
+        IPen adaptedPilotPen = new PilotPenAdapter(pilotPen);
+        IPen regularPen = new RegularPen();
+
+        Console.WriteLine("Using Pilot Pen through Adapter for the assignment:");
+        student.DoAssignment(adaptedPilotPen, "Assignment content using Pilot Pen through Adapter.");
+
+        Console.WriteLine("\nUsing Regular Pen for the assignment:");
+        student.DoAssignment(regularPen, "Assignment content using Regular Pen.");
+    }
+}
