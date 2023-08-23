@@ -1,0 +1,77 @@
+https://www.youtube.com/watch?v=xcMJUtWbFZU&ab_channel=DailyCodeBuffer
+************************
+using System;
+
+// Strategy interface
+interface ISortStrategy
+{
+    void Sort(int[] array);
+}
+
+// Concrete strategies
+class BubbleSortStrategy : ISortStrategy
+{
+    public void Sort(int[] array)
+    {
+        Console.WriteLine("Sorting using Bubble Sort.");
+        // Implementation of Bubble Sort
+    }
+}
+
+class QuickSortStrategy : ISortStrategy
+{
+    public void Sort(int[] array)
+    {
+        Console.WriteLine("Sorting using Quick Sort.");
+        // Implementation of Quick Sort
+    }
+}
+
+class MergeSortStrategy : ISortStrategy
+{
+    public void Sort(int[] array)
+    {
+        Console.WriteLine("Sorting using Merge Sort.");
+        // Implementation of Merge Sort
+    }
+}
+
+// Context
+class SortContext
+{
+    private ISortStrategy _strategy;
+
+    public void SetStrategy(ISortStrategy strategy)
+    {
+        _strategy = strategy;
+    }
+
+    public void SortArray(int[] array)
+    {
+        _strategy.Sort(array);
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        int[] data = { 10, 5, 8, 2, 1 };
+
+        SortContext context = new SortContext();
+
+        context.SetStrategy(new BubbleSortStrategy());
+        context.SortArray(data);
+
+        context.SetStrategy(new QuickSortStrategy());
+        context.SortArray(data);
+
+        context.SetStrategy(new MergeSortStrategy());
+        context.SortArray(data);
+    }
+}
+***************
+ISortStrategy defines the strategy interface with a Sort method.
+BubbleSortStrategy, QuickSortStrategy, and MergeSortStrategy are concrete strategies that implement the ISortStrategy interface and define different sorting algorithms.
+SortContext is the context that holds a reference to the current sorting strategy and uses it to sort an array.
+The Program class demonstrates how to create a context, set different sorting strategies, and sort an array using the selected strategy. This enables you to change the sorting algorithm at runtime without modifying the client code.
