@@ -1,0 +1,12 @@
+class Singleton{
+  Static Singleton single = new Singleton();
+  private void Singleton{
+  }
+  public static Singleton getInstance(){
+    return single
+}
+class Main{
+  public static void main(String [] args){
+    Singleton obj1 = Singleton.getInstance()
+    Singleton obj2 = Singleton.getInstance()
+}
